@@ -149,7 +149,7 @@ pve_check() {
   PVE_VER="$(pveversion | awk -F'/' '{print $2}' | awk -F'-' '{print $1}')"
 
   # Check for Proxmox VE 8.x: allow 8.0–8.9
-  if [[ "$PVE_VER" >~ ^8\.([0-9]+) ]]; then
+  if [[ "$PVE_VER" =~ ^8\.([0-9]+) ]]; then
     local MINOR="${BASH_REMATCH[1]}"
     if ((MINOR < 0 || MINOR > 9)); then
       msg_error "This version of Proxmox VE is not supported."
@@ -509,7 +509,6 @@ function start_script() {
 
 check_root
 arch_check
-pve_check
 ssh_check
 ensure_pv
 start_script
